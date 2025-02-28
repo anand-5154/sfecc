@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Portal</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar <%= locals.user && locals.user.isAdmin ? 'admin-nav' : '' %>">
+        <div class="nav-brand">News Portal</div>
+        <div class="nav-links">
+            <% if (locals.user && locals.user.isAdmin) { %>
+                <!-- Admin Navigation -->
+                <a href="/news">News</a>
+                <a href="/news/create">Create News</a>
+                <a href="/feedback">View Feedbacks</a>
+                <a href="/auth/logout">Logout</a>
+            <% } else if (locals.user) { %>
+                <!-- Regular User Navigation -->
+                <a href="/news">News</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/payment">Payment</a>
+                <a href="/membership">Membership</a>
+                <a href="/auth/logout">Logout</a>
+            <% } else { %>
+                <!-- Guest Navigation -->
+                <a href="/auth/login">Login</a>
+                <a href="/auth/register">Register</a>
+            <% } %>
+        </div>
+    </nav>
+    <div class="container">
