@@ -39,6 +39,16 @@ app.set('views', path.join(__dirname, 'views'));
 const feedbackRoutes = require('./routes/feedbackRoutes');
 app.use('/feedback', feedbackRoutes);
 
+// Modified root route to show login page
+app.get('/', (req, res) => {
+    // If user is already logged in, redirect to news
+    if (req.session.user) {
+        return res.redirect('/news');
+    }
+    // Otherwise show login page
+    res.render('auth/login');
+});
+
 app.use('/auth', require('./routes/authRoutes'));
 app.use('/news', require('./routes/newsRoutes'));
 

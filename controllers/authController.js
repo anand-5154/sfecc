@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { validationResult } = require('express-validator');
 
 // Export an object with all controller methods
 module.exports = {
@@ -7,65 +8,57 @@ module.exports = {
             const { email, password } = req.body;
             const user = await User.findOne({ email });
             
-            if (!user || !(await user.comparePassword(password))) {
-                return res.render('auth/login', { 
-                    error: 'Invalid credentials',
-                    user: req.session.user || null
-                });
+            if (!user || !await user.comparePassword(password)) {
+                return res.render('auth/login', { error: 'Invalid credentials' });
             }
 
+            // Store complete user object in session
             req.session.user = {
-                id: user._id,
+                _id: user._id,
+                username: user.username,
+                email: user.email,
                 isAdmin: user.isAdmin
             };
 
             res.redirect('/news');
         } catch (error) {
             console.error('Login error:', error);
-            res.render('auth/login', { 
-                error: 'Server error',
-                user: req.session.user || null
-            });
+            res.render('auth/login', { error: 'An error occurred during login' });
         }
     },
 
     logout: (req, res) => {
         req.session.destroy((err) => {
             if (err) {
-                console.error('Logout error:', err);
+                return res.redirect('/news');
             }
-            res.redirect('/auth/login');
+            res.redirect('/');
         });
     },
 
     register: async (req, res) => {
         try {
-            const { username, email, password } = req.body;
-            
-            // Check if user already exists
-            const existingUser = await User.findOne({ email });
-            if (existingUser) {
-                return res.render('auth/register', {
-                    error: 'Email already registered',
-                    user: req.session.user || null
-                });
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.render('auth/register', { errors: errors.array() });
             }
 
+            const { username, email, password } = req.body;
             const user = new User({ username, email, password });
             await user.save();
-            
+
+            // Store user in session after registration
             req.session.user = {
-                id: user._id,
+                _id: user._id,
+                username: user.username,
+                email: user.email,
                 isAdmin: user.isAdmin
             };
-            
+
             res.redirect('/news');
         } catch (error) {
             console.error('Registration error:', error);
-            res.render('auth/register', {
-                error: 'Error registering user',
-                user: req.session.user || null
-            });
+            res.render('auth/register', { error: 'An error occurred during registration' });
         }
     },
 

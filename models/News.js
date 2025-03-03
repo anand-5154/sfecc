@@ -11,21 +11,20 @@ const newsSchema = new mongoose.Schema({
     },
     mediaType: {
         type: String,
-        enum: ['text', 'image', 'video'],
-        required: true
+        enum: ['image', 'video', null],
+        default: null
     },
     mediaUrl: {
-        type: String
+        type: String,
+        default: null
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
     }
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model('News', newsSchema);

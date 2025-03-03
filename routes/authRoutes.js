@@ -22,6 +22,13 @@ router.post('/register', [
     body('password').isLength({ min: 6 })
 ], authController.register);
 
-router.get('/logout', authController.logout);
+router.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.redirect('/news');
+        }
+        res.redirect('/');
+    });
+});
 
 module.exports = router;
