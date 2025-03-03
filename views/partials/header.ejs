@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFECC</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar <%= locals.user && locals.user.isAdmin ? 'admin-nav' : '' %>">
+        <div class="nav-brand">SFECC </div>
+        <button class="menu-toggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav-links">
+            <% if (locals.user && locals.user.isAdmin) { %>
+                <!-- Admin Navigation -->
+                <a href="/news">Home</a>
+                <a href="/news/create">Create Post</a>
+                <a href="/feedback">View Feedbacks</a>
+                <a href="/auth/logout">Logout</a>
+            <% } else if (locals.user) { %>
+                <!-- Regular User Navigation -->
+                <a href="/news">Home</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/payment">Payment</a>
+                <a href="/membership">Membership</a>
+                <a href="/auth/logout">Logout</a>
+            <% } else { %>
+                <!-- Guest Navigation -->
+                <a href="/auth/login">Login</a>
+                <a href="/auth/register">Register</a>
+            <% } %>
+        </div>
+    </nav>
+    <div class="container">
