@@ -338,4 +338,65 @@ body::before {
 
 .footer.admin-footer {
     background-color: #1976D2; /* Blue color for admin */
+}
+
+/* Payment Page Styles */
+.payment-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+.payment-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.payment-box {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Ensure text and elements inside payment boxes are properly aligned */
+.payment-box * {
+    max-width: 100%;
+    text-align: left;
+}
+
+.payment-box h3,
+.payment-box p,
+.payment-box div {
+    margin: 10px 0;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+    .payment-container {
+        padding: 10px;
+    }
+
+    .payment-box {
+        padding: 15px;
+        margin: 0;
+        width: auto;
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+    .payment-container {
+        padding: 5px;
+    }
+
+    .payment-box {
+        padding: 12px;
+        margin-bottom: 10px;
+    }
 } 
