@@ -34,14 +34,9 @@ app.use((req, res, next) => {
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Root route - show login page
+// Root route - redirect to news instead of login
 app.get('/', (req, res) => {
-    // If user is already logged in, redirect to news
-    if (req.session.user) {
-        return res.redirect('/news');
-    }
-    // Show login page for non-authenticated users
-    res.render('auth/login', { error: null });
+    res.redirect('/news');
 });
 
 // Routes
@@ -62,6 +57,11 @@ app.get('/membership', (req, res) => {
 });
 app.get('/payment', (req, res) => {
     res.render('payment');
+});
+
+// Hidden admin login route
+app.get('/admin-login', (req, res) => {
+    res.render('auth/login', { error: null });
 });
 
 const PORT = process.env.PORT || 3000;

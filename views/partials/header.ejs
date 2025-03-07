@@ -21,18 +21,13 @@
                 <a href="/news/create">Create Post</a>
                 <a href="/feedback">View Feedbacks</a>
                 <a href="/auth/logout">Logout</a>
-            <% } else if (locals.user) { %>
+            <% } else { %>
                 <!-- Regular User Navigation -->
                 <a href="/news">Home</a>
                 <a href="/about">About</a>
                 <a href="/contact">Contact</a>
                 <a href="/payment">Payment</a>
                 <a href="/membership">Membership</a>
-                <a href="/auth/logout">Logout</a>
-            <% } else { %>
-                <!-- Guest Navigation -->
-                <a href="/auth/login">Login</a>
-                <a href="/auth/register">Register</a>
             <% } %>
         </div>
     </nav>

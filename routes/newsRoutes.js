@@ -17,10 +17,13 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.get('/',isAuthenticated,newsController.getAllNews);
+// Public routes
+router.get('/', newsController.getAllNews);
+router.get('/:id', newsController.getNewsDetail);
+
+// Admin only routes
 router.get('/create', isAdmin, newsController.getCreateNews);
 router.post('/create', isAdmin, upload.single('media'), newsController.createNews);
-router.get('/:id',isAuthenticated,newsController.getNewsDetail);
 router.delete('/:id', isAdmin, newsController.deleteNews);
 
 module.exports = router;
