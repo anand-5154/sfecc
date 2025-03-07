@@ -4,13 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SFECC</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/uploads/logo.png">
+    <link rel="shortcut icon" type="image/png" href="/uploads/logo.png">
+    <link rel="apple-touch-icon" href="/uploads/logo.png">
+    
     <link rel="stylesheet" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <nav class="navbar <%= locals.user && locals.user.isAdmin ? 'admin-nav' : '' %>">
-        <div class="nav-brand">SFECC </div>
+        <div class="nav-brand">
+            <img src="/uploads/logo.png" alt="SFECC Logo" class="nav-logo">
+            SFECC
+        </div>
         <button class="menu-toggle" aria-label="Toggle menu">
             <i class="fas fa-bars"></i>
         </button>
@@ -22,7 +31,7 @@
                 <a href="/feedback">View Feedbacks</a>
                 <a href="/auth/logout">Logout</a>
             <% } else { %>
-                <!-- Regular User Navigation -->
+                <!-- Public Navigation -->
                 <a href="/news">Home</a>
                 <a href="/about">About</a>
                 <a href="/contact">Contact</a>
