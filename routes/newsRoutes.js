@@ -17,13 +17,15 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Public routes
-router.get('/', newsController.getAllNews);
-router.get('/:id', newsController.getNewsDetail);
-
-// Admin only routes
+// Admin routes should come BEFORE the :id route
 router.get('/create', isAdmin, newsController.getCreateNews);
 router.post('/create', isAdmin, upload.single('media'), newsController.createNews);
+
+// Public routes
+router.get('/', newsController.getAllNews);
+
+// Detail route should come LAST
+router.get('/:id', newsController.getNewsDetail);
 router.delete('/:id', isAdmin, newsController.deleteNews);
 
 module.exports = router;

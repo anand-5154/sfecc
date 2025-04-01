@@ -39,6 +39,11 @@ app.get('/', (req, res) => {
     res.redirect('/news');
 });
 
+// Move admin-login route to main level
+app.get('/admin-login', (req, res) => {
+    res.render('auth/login', { error: null });
+});
+
 // Routes
 const feedbackRoutes = require('./routes/feedbackRoutes');
 app.use('/feedback', feedbackRoutes);
@@ -57,11 +62,6 @@ app.get('/membership', (req, res) => {
 });
 app.get('/payment', (req, res) => {
     res.render('payment');
-});
-
-// Hidden admin login route
-app.get('/admin-login', (req, res) => {
-    res.render('auth/login', { error: null });
 });
 
 const PORT = process.env.PORT || 3000;

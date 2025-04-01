@@ -2,12 +2,12 @@
 
 <div class="news-container">
     <div class="news-header">
-        <h1>Latest Updates</h1>
+        <h1 style="color: antiquewhite;">Latest Updates</h1>
         
         <!-- Date Filter -->
         <div class="date-filter">
             <form action="/news" method="GET" id="dateFilterForm">
-                <label for="dateSelect">Filter by Date:</label>
+                <label for="dateSelect" style="color: aliceblue;">Filter by Date:</label>
                 <select id="dateSelect" name="date" onchange="this.form.submit()">
                     <option value="">All Dates</option>
                     <% availableDates.forEach(date => { %>

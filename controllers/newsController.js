@@ -44,26 +44,22 @@ exports.createNews = async (req, res) => {
     try {
         console.log('Session user:', req.session.user); // Debug log
 
-        if (!req.session.user || !req.session.user.id) {
+        if (!req.session.user || !req.session.user._id) {
             throw new Error('User not authenticated');
         }
 
         const { title, content } = req.body;
         
-        // Create news object with required fields
         const newsData = {
             title,
             content,
-            createdBy: req.session.user.id
+            createdBy: req.session.user._id
         };
 
-        // Add media info only if a file was uploaded
         if (req.file) {
             newsData.mediaType = req.file.mimetype.startsWith('image/') ? 'image' : 'video';
             newsData.mediaUrl = `/uploads/${req.file.filename}`;
         }
-
-        console.log('Creating news with data:', newsData); // Debug log
 
         const news = new News(newsData);
         await news.save();

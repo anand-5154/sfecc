@@ -3,6 +3,11 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const { body } = require('express-validator');
 
+// Admin login route
+router.get('/admin-login', (req, res) => {
+    res.render('auth/login', { error: null });
+});
+
 // Login routes
 router.get('/login', (req, res) => {
     res.render('auth/login', { error: null });

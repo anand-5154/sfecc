@@ -12,15 +12,23 @@ module.exports = {
                 return res.render('auth/login', { error: 'Invalid credentials' });
             }
 
-            // Store user data in session with _id
+            // Store complete user object in session
             req.session.user = {
-                _id: user._id.toString(), // Convert ObjectId to string
+                id: user._id,        // Store MongoDB _id as id
                 username: user.username,
                 email: user.email,
                 isAdmin: user.isAdmin
             };
 
-            res.redirect('/news');
+            // Save session before redirecting
+            req.session.save((err) => {
+                if (err) {
+                    console.error('Session save error:', err);
+                    return res.render('auth/login', { error: 'Session error' });
+                }
+                res.redirect('/news');
+            });
+
         } catch (error) {
             console.error('Login error:', error);
             res.render('auth/login', { error: 'An error occurred during login' });

@@ -23,6 +23,13 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
+    background-image: url('../uploads/nature.png'); /* Try this path */
+    /* OR */
+    /* background-image: url('/images/background.jpg'); */ /* Or this path */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 body::before {
@@ -32,12 +39,13 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/public/uploads/nature.png'); /* Replace with your image path */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.15; /* Adjust this value between 0 and 1 to control transparency */
+    background-color: rgba(255, 255, 255, 0); /* White background with 90% opacity */
     z-index: -1;
+}
+
+/* Debug style to ensure the structure is working */
+body {
+    background-color: #f0f0f0; /* Fallback color if image fails to load */
 }
 
 .container {
@@ -47,6 +55,8 @@ body::before {
     padding: 20px;
     width: 100%;
     box-sizing: border-box;
+    position: relative;
+    z-index: 1;
 }
 
 /* Navbar Styles */
@@ -57,6 +67,8 @@ body::before {
     justify-content: space-between;
     align-items: center;
     color: var(--white);
+    position: relative;
+    z-index: 2;
 }
 
 .nav-brand {
@@ -170,15 +182,29 @@ body::before {
 }
 
 .news-card {
-    background: var(--white);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
+    background-color: rgba(144, 238, 144, 0.8); /* Light green with some transparency */
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    color: rgb(0, 0, 0); /* White text */
 }
 
-.news-card:hover {
-    transform: translateY(-5px);
+.news-card h3 {
+    color: rgb(10, 8, 8);
+    margin-bottom: 10px;
+}
+
+.news-card p {
+    color: rgb(10, 6, 6);
+}
+
+.news-meta {
+    color: rgba(8, 6, 6, 0.9);
+}
+
+.news-meta span {
+    color: rgba(0, 0, 0, 0.9);
 }
 
 .news-card img {
@@ -203,14 +229,17 @@ body::before {
 }
 
 .btn-secondary {
-    background-color: var(--secondary-color);
-    color: var(--white);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
     padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     text-decoration: none;
     display: inline-block;
-    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .btn-danger {
@@ -414,4 +443,61 @@ body::before {
         padding: 12px;
         margin-bottom: 10px;
     }
+}
+
+/* Content Card Styles */
+.about-container, .payment-container, .contact-container, .membership-container {
+    background-color: rgba(144, 238, 144, 0.3); /* Light green with low opacity */
+    border-radius: 12px;
+    padding: 30px;
+    margin: 20px auto;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    max-width: 1200px;
+    color: rgb(12, 11, 11);
+}
+
+/* Section styles within containers */
+.about-content section, 
+.payment-section, 
+.contact-form,
+.membership-form {
+    background-color: rgba(144, 238, 144, 0.4); /* Slightly more opaque for nested sections */
+    border-radius: 8px;
+    padding: 20px;
+    margin: 15px 0;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+    color: rgb(0, 0, 0);
+    margin-bottom: 15px;
+}
+
+/* Text content */
+p, li {
+    color: rgb(0, 0, 0);
+    line-height: 1.6;
+}
+
+/* Links within content */
+.about-content a, 
+.payment-content a,
+.contact-content a,
+.membership-content a {
+    color: white;
+    text-decoration: underline;
+}
+
+/* Form elements if any */
+input, textarea, select {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+/* Placeholder text */
+input::placeholder, textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
 } 
