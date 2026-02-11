@@ -1,11 +1,27 @@
 <%- include('../partials/header') %>
 
 <div class="news-container">
+    <h1 style="color: antiquewhite; margin-bottom: 30px;">Latest Updates</h1>
+
+    <!-- Ongoing Matters Section -->
+    <div class="ongoing-matters-box">
+        <h2>ONGOING MATTERS</h2>
+        <p>
+            1. Implementation of Green Highways Policy 2015<br>
+            2. Illegal Sand Mining<br>
+            3. Solid Waste management<br>
+            4. Pollution of the Agnitheerta - Sowparnika River at Kollur Mookambika Temple<br>
+            5. Destruction of the ecosystem by Kharland projects<br>
+            6. Challenging the CZMP map under CRZ 2019 notification<br>
+            7. Elevated Highway<br>
+            8. Climate emergency<br>
+            9. Netravathi Riverfront Promenade Project
+        </p>
+    </div>
+
     <div class="news-header">
-        <h1 style="color: antiquewhite;">Latest Updates</h1>
-        
         <!-- Date Filter -->
-        <div class="date-filter">
+        <!-- <div class="date-filter">
             <form action="/news" method="GET" id="dateFilterForm">
                 <label for="dateSelect" style="color: aliceblue;">Filter by Date:</label>
                 <select id="dateSelect" name="date" onchange="this.form.submit()">
@@ -17,12 +33,12 @@
                     <% }); %>
                 </select>
             </form>
-        </div>
+        </div> -->
     </div>
 
     <% if (news.length === 0) { %>
         <div class="no-news">
-            <p>No news available for this date.</p>
+            <!-- <p>No news available for this date.</p> -->
         </div>
     <% } else { %>
         <div class="news-grid">
