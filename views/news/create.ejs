@@ -31,12 +31,142 @@
     </form>
 </div>
 
+<!-- Cropper.js CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<div id="crop-ui" style="display:none; text-align:center; margin-top:20px;">
+    <p style="color:white;">Adjust the crop area and click <strong>Apply Crop</strong>.</p>
+    <div style="max-width:800px; margin:0 auto;">
+        <img id="imagePreview" style="max-width:100%; display:block; margin:0 auto;" />
+    </div>
+    <div style="margin-top:10px;">
+        <button id="applyCrop" class="btn-secondary" type="button">Apply Crop</button>
+        <button id="resetCrop" class="btn-secondary" type="button">Reset</button>
+    </div>
+</div>
+
+<!-- Cropper.js script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
     // Show/hide media upload based on media type selection
-    document.getElementById('mediaType').addEventListener('change', function() {
-        const mediaUpload = document.getElementById('mediaUpload');
-        mediaUpload.style.display = this.value === 'text' ? 'none' : 'block';
+    const mediaTypeEl = document.getElementById('mediaType');
+    const mediaUploadEl = document.getElementById('mediaUpload');
+    const mediaInput = document.getElementById('media');
+    const form = document.querySelector('form');
+    const cropUi = document.getElementById('crop-ui');
+    const imagePreview = document.getElementById('imagePreview');
+    let cropper = null;
+    let croppedBlob = null;
+
+    function updateMediaVisibility() {
+        mediaUploadEl.style.display = mediaTypeEl.value === 'text' ? 'none' : 'block';
+        if (mediaTypeEl.value !== 'image') {
+            // hide crop ui and reset
+            cropUi.style.display = 'none';
+            if (cropper) {
+                cropper.destroy();
+                cropper = null;
+            }
+            imagePreview.src = '';
+            croppedBlob = null;
+        }
+    }
+
+    mediaTypeEl.addEventListener('change', updateMediaVisibility);
+    updateMediaVisibility();
+
+    mediaInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (mediaTypeEl.value === 'image' && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                imagePreview.src = evt.target.result;
+                // show crop UI
+                cropUi.style.display = 'block';
+
+                // init cropper
+                if (cropper) {
+                    cropper.destroy();
+                }
+                cropper = new Cropper(imagePreview, {
+                    viewMode: 1,
+                    autoCropArea: 0.9,
+                    responsive: true,
+                    background: false
+                });
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // not an image or not image media type
+            cropUi.style.display = 'none';
+        }
     });
+
+    document.getElementById('applyCrop').addEventListener('click', function() {
+        if (!cropper) return;
+        cropper.getCroppedCanvas({ maxWidth: 2000, maxHeight: 2000 }).toBlob(function(blob) {
+            croppedBlob = blob;
+            // show a small confirmation
+            alert('Crop applied. Submit the form to upload.');
+        }, 'image/jpeg', 0.9);
+    });
+
+    document.getElementById('resetCrop').addEventListener('click', function() {
+        if (cropper) {
+            cropper.reset();
+            croppedBlob = null;
+        }
+    });
+
+    // Intercept form submit to send cropped image when available
+    form.addEventListener('submit', function(e) {
+        // Only intercept if mediaType is image
+        if (mediaTypeEl.value === 'image') {
+            e.preventDefault();
+            const submitUrl = form.action;
+            const formData = new FormData();
+            formData.append('title', document.getElementById('title').value);
+            formData.append('content', document.getElementById('content').value);
+            formData.append('mediaType', mediaTypeEl.value);
+
+            if (croppedBlob) {
+                // Append cropped image as 'media'
+                formData.append('media', croppedBlob, 'cropped.jpg');
+                sendFormData(submitUrl, formData);
+            } else if (mediaInput.files && mediaInput.files[0]) {
+                // No crop applied but original file present
+                formData.append('media', mediaInput.files[0]);
+                sendFormData(submitUrl, formData);
+            } else {
+                // No media file – submit without media
+                sendFormData(submitUrl, formData);
+            }
+        }
+        // For non-image media types allow normal submit
+    });
+
+    async function sendFormData(url, formData) {
+        try {
+            const resp = await fetch(url, {
+                method: 'POST',
+                body: formData
+            });
+            if (resp.ok) {
+                // redirect to news list
+                window.location.href = '/news';
+            } else {
+                const text = await resp.text();
+                console.error('Upload failed', text);
+                alert('Upload failed. Check console for details.');
+            }
+        } catch (err) {
+            console.error('Error uploading:', err);
+            alert('Error uploading media. See console for details.');
+        }
+    }
 </script>
 
 <%- include('../partials/footer') %>

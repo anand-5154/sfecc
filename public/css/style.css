@@ -165,12 +165,32 @@ body {
 }
 
 .auth-box {
-    background: var(--white);
+    background: rgba(46, 125, 50, 0.85); /* match about/contact boxed style */
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
+    color: white;
+    border: 2px solid var(--secondary-color);
+}
+
+.auth-box h2 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.auth-box input {
+    background-color: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.auth-box .auth-link a {
+    color: var(--secondary-color);
+    text-decoration: underline;
 }
 
 /* News Container Styles */
@@ -236,14 +256,36 @@ body {
     color: white;
 }
 
-.news-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+/* Ensure images in news cards and content fit inside a 10x10cm box
+   Use min(10cm, 90vw) so images remain usable on small screens */
+.news-card img,
+.news-detail img,
+.news-content img,
+.qr-code {
+    /* Constrain images to a 15cm x 15cm square when viewport allows,
+       but fall back to viewport-based sizing on small screens. */
+    width: min(15cm, 90vw);
+    height: min(15cm, 90vw);
+    max-width: 100%;
+    object-fit: contain; /* ensure whole image is visible */
+    display: block;
+    margin: 0 auto 20px;
+    background: transparent; /* show page background in empty area */
+    padding: 0;
+    border-radius: 6px;
 }
 
 .news-content {
     padding: 20px;
+}
+
+/* Ensure news detail images show full width and scale */
+.news-detail img,
+.news-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 20px auto;
 }
 
 /* Button Styles */
@@ -421,9 +463,9 @@ body {
 .feedback-section {
     margin-top: 2rem;
     padding: 1rem;
-    background: var(--white);
+    background: rgba(46, 125, 50, 0.7); /* low-opacity green matching about/contact */
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
 }
 
 .feedback-form textarea {
@@ -454,11 +496,11 @@ body {
 }
 
 .feedback-admin-item {
-    background: var(--white);
+    background: rgba(46, 125, 50, 0.75);
     padding: 1rem;
     margin-bottom: 1rem;
     border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.12);
 }
 
 .feedback-header {

@@ -44,7 +44,9 @@ exports.createNews = async (req, res) => {
     try {
         console.log('Session user:', req.session.user); // Debug log
 
-        if (!req.session.user || !req.session.user._id) {
+        // Accept session user id whether stored as `id` or `_id`
+        const sessionUserId = req.session.user && (req.session.user._id || req.session.user.id);
+        if (!sessionUserId) {
             throw new Error('User not authenticated');
         }
 
@@ -53,7 +55,7 @@ exports.createNews = async (req, res) => {
         const newsData = {
             title,
             content,
-            createdBy: req.session.user._id
+            createdBy: sessionUserId
         };
 
         if (req.file) {
