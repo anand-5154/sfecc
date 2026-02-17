@@ -21,6 +21,10 @@ const upload = multer({ storage: storage });
 router.get('/create', isAdmin, newsController.getCreateNews);
 router.post('/create', isAdmin, upload.single('media'), newsController.createNews);
 
+// Edit news (admin only)
+router.get('/:id/edit', isAdmin, newsController.getEditNews);
+router.post('/:id/edit', isAdmin, upload.single('media'), newsController.updateNews);
+
 // Public routes
 router.get('/', newsController.getAllNews);
 

@@ -26,6 +26,7 @@
             </div>
 
             <% if (user && user.isAdmin) { %>
+                <a href="/news/<%= news._id %>/edit" class="btn-secondary" style="margin-right:10px;">Edit News</a>
                 <button onclick="deleteNews('<%= news._id %>')" class="btn-danger">Delete News</button>
             <% } %>
         </section>
