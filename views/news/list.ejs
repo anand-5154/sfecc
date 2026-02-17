@@ -50,6 +50,11 @@
                 <div class="news-card">
                     <% if (item.mediaType === 'image' && item.mediaUrl) { %>
                         <img src="<%= item.mediaUrl %>" alt="<%= item.title %>">
+                    <% } else if (item.mediaType === 'video' && item.mediaUrl) { %>
+                        <video controls style="max-width:100%; height:auto; margin-bottom:15px;">
+                            <source src="<%= item.mediaUrl %>" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     <% } %>
                     <div class="news-content">
                         <h3><%= item.title %></h3>
