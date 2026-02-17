@@ -224,19 +224,28 @@ body {
     font-size: 1rem;
     margin: 0;
 }
+
+/* Grid for news cards */
+.news-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* single column so each card matches the main content width */
+    grid-template-columns: 1fr;
     gap: 20px;
     margin-top: 20px;
 }
 
 .news-card {
-    background-color: rgba(144, 238, 144, 0.8); /* Light green with some transparency */
-    border-radius: 8px;
+    /* Match about/contact boxed style for each news item */
+    background-color: rgba(46, 125, 50, 0.85);
+    border-radius: 12px;
     padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    color: white; /* White text */
+    margin: 0 auto 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+    color: white;
+    border: 2px solid var(--secondary-color);
+    width: 100%;
+    max-width: 1200px; /* same max width as .container/about area */
+    box-sizing: border-box;
 }
 
 .news-card h3 {
