@@ -1,4 +1,3 @@
-// Delete news function for admin
 async function deleteNews(newsId) {
     if (confirm('Are you sure you want to delete this news?')) {
         try {
@@ -17,7 +16,6 @@ async function deleteNews(newsId) {
     }
 }
 
-// Add smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();

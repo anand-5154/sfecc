@@ -10,7 +10,7 @@
             1.  OA 86 of 2025 SWM NH & Railways<br>
             2.  OA 281 of 2024 Retired DCF penalized for felling 800 trees in Madikeri Division<br>
             3.  OA72/2025 Sand petition<br>
-            4.  AP/18/2025 Kharllan<br>
+            4.  AP/18/2025 Kharland<br>
             5.  AP/36/2025 400 KVA 3.78 lakh trees<br> 
             6.  OA/125/2024 Kollur Sewage petition<br>
             7.  OA/150/2023 Phalguni river pollution IA2/2026<br>
@@ -49,7 +49,9 @@
             <% news.forEach(item => { %>
                 <div class="news-card">
                     <% if (item.mediaType === 'image' && item.mediaUrl) { %>
-                        <img src="<%= item.mediaUrl %>" alt="<%= item.title %>">
+                        <a href="<%= item.mediaUrl %>" class="glightbox" data-gallery="news-gallery" data-title="<%= item.title %>">
+                            <img src="<%= item.mediaUrl %>" alt="<%= item.title %>" style="cursor:pointer;">
+                        </a>
                     <% } else if (item.mediaType === 'video' && item.mediaUrl) { %>
                         <video controls style="max-width:100%; height:auto; margin-bottom:15px;">
                             <source src="<%= item.mediaUrl %>" type="video/mp4">

@@ -12,7 +12,9 @@
 
             <div class="news-content">
                 <% if (news.mediaType === 'image' && news.mediaUrl) { %>
-                    <img src="<%= news.mediaUrl %>" alt="<%= news.title %>">
+                    <a href="<%= news.mediaUrl %>" class="glightbox" data-gallery="detail-gallery" data-title="<%= news.title %>">
+                        <img src="<%= news.mediaUrl %>" alt="<%= news.title %>" style="cursor:pointer;">
+                    </a>
                 <% } else if (news.mediaType === 'video' && news.mediaUrl) { %>
                     <video controls style="max-width:100%; display:block; margin:0 auto 20px;">
                         <source src="<%= news.mediaUrl %>" type="video/mp4">

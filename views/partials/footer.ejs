@@ -3,7 +3,18 @@
         <p>&copy; SFECC @2025. All rights reserved.</p>
     </footer>
     <script src="/js/main.js"></script>
+    
+    <!-- GLightbox JS for lightbox functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        // Initialize GLightbox for images with class 'glightbox'
+        const lightbox = GLightbox({
+            selector: '.glightbox',
+            touchNavigation: true,
+            loop: true,
+            autoplayVideos: false
+        });
+
         document.querySelector('.menu-toggle').addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('active');
         });

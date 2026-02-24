@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const { validationResult } = require('express-validator');
 
-// Export an object with all controller methods
 module.exports = {
     login: async (req, res) => {
         try {
@@ -12,15 +11,13 @@ module.exports = {
                 return res.render('auth/login', { error: 'Invalid credentials' });
             }
 
-            // Store complete user object in session
             req.session.user = {
-                id: user._id,        // Store MongoDB _id as id
+                id: user._id,
                 username: user.username,
                 email: user.email,
                 isAdmin: user.isAdmin
             };
 
-            // Save session before redirecting
             req.session.save((err) => {
                 if (err) {
                     console.error('Session save error:', err);
@@ -48,7 +45,6 @@ module.exports = {
         try {
             const { username, email, password } = req.body;
             
-            // Check if user already exists
             const existingUser = await User.findOne({ email });
             if (existingUser) {
                 return res.render('auth/register', {
@@ -118,7 +114,6 @@ module.exports = {
         try {
             const { username, email, password } = req.body;
             
-            // Check if user already exists
             const existingUser = await User.findOne({ email });
             if (existingUser) {
                 return res.render('auth/register', {

@@ -1,45 +1,3 @@
-// Render edit form for news (admin only)
-exports.getEditNews = async (req, res) => {
-    try {
-        const news = await News.findById(req.params.id);
-        if (!news) {
-            return res.status(404).render('error', {
-                message: 'News not found',
-                user: req.session.user || null
-            });
-        }
-        res.render('news/edit', {
-            news,
-            user: req.session.user || null
-        });
-    } catch (error) {
-        console.error('Error loading edit form:', error);
-        res.status(500).render('error', {
-            message: 'Error loading edit form',
-            user: req.session.user || null
-        });
-    }
-};
-
-// Handle update of news (admin only)
-exports.updateNews = async (req, res) => {
-    try {
-        const { title, content } = req.body;
-        const update = { title, content };
-        if (req.file) {
-            update.mediaType = req.file.mimetype.startsWith('image/') ? 'image' : 'video';
-            update.mediaUrl = `/uploads/${req.file.filename}`;
-        }
-        await News.findByIdAndUpdate(req.params.id, update);
-        res.redirect(`/news/${req.params.id}`);
-    } catch (error) {
-        console.error('Error updating news:', error);
-        res.status(500).render('error', {
-            message: 'Error updating news',
-            user: req.session.user || null
-        });
-    }
-};
 const News = require('../models/News');
 
 exports.getAllNews = async (req, res) => {
@@ -145,6 +103,47 @@ exports.getNewsDetail = async (req, res) => {
         console.error('Error fetching news detail:', error);
         res.status(500).render('error', { 
             message: 'Error fetching news detail',
+            user: req.session.user || null
+        });
+    }
+};
+
+exports.getEditNews = async (req, res) => {
+    try {
+        const news = await News.findById(req.params.id);
+        if (!news) {
+            return res.status(404).render('error', {
+                message: 'News not found',
+                user: req.session.user || null
+            });
+        }
+        res.render('news/edit', {
+            news,
+            user: req.session.user || null
+        });
+    } catch (error) {
+        console.error('Error loading edit form:', error);
+        res.status(500).render('error', {
+            message: 'Error loading edit form',
+            user: req.session.user || null
+        });
+    }
+};
+
+exports.updateNews = async (req, res) => {
+    try {
+        const { title, content } = req.body;
+        const update = { title, content };
+        if (req.file) {
+            update.mediaType = req.file.mimetype.startsWith('image/') ? 'image' : 'video';
+            update.mediaUrl = `/uploads/${req.file.filename}`;
+        }
+        await News.findByIdAndUpdate(req.params.id, update);
+        res.redirect(`/news/${req.params.id}`);
+    } catch (error) {
+        console.error('Error updating news:', error);
+        res.status(500).render('error', {
+            message: 'Error updating news',
             user: req.session.user || null
         });
     }

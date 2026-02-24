@@ -11,11 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (response.ok) {
                 const data = await response.json();
-                // Update counts
                 button.closest('.news-actions').querySelector('.like-count').textContent = data.likes;
                 button.closest('.news-actions').querySelector('.dislike-count').textContent = data.dislikes;
                 
-                // Toggle active states
                 if (action === 'like') {
                     button.dataset.liked = !(button.dataset.liked === 'true');
                     const dislikeBtn = button.nextElementSibling;
@@ -26,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     likeBtn.dataset.liked = 'false';
                 }
             } else {
-                // If not logged in, redirect to login page
                 window.location.href = '/auth/login';
             }
         } catch (error) {
@@ -34,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Add click handlers for like/dislike buttons
     document.querySelectorAll('.like-btn').forEach(button => {
         button.addEventListener('click', () => handleAction(button, 'like'));
     });
